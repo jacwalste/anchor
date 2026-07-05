@@ -1,4 +1,22 @@
-"""Test doubles shared across the suite. No real model calls, ever."""
+"""Test doubles and factories shared across the suite. No real model calls, ever."""
+
+from anchor import Claim, Evidence, Verdict, VerdictLabel, VerifiedClaim
+
+
+def make_verified_claim(
+    label: VerdictLabel,
+    claim_text: str = "a canned claim",
+    quote: str = "a canned supporting passage",
+) -> VerifiedClaim:
+    """Build a schema-valid VerifiedClaim: evidence present unless unsupported."""
+    if label is VerdictLabel.UNSUPPORTED:
+        evidence = None
+    else:
+        evidence = Evidence(chunk_id="chunk-1", quote=quote)
+    return VerifiedClaim(
+        claim=Claim(text=claim_text, source_text=claim_text),
+        verdict=Verdict(label=label, rationale="canned rationale", evidence=evidence),
+    )
 
 
 class ScriptedJudge:
