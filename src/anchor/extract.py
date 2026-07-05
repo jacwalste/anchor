@@ -4,13 +4,12 @@ This stage owns the extraction prompt and all parsing/validation of the raw
 judge response — the judge client itself is just prompt-in, text-out.
 """
 
-import json
-
 from pydantic import ValidationError
 
 from anchor.claim import Claim
 from anchor.errors import JudgeResponseError
 from anchor.judge import JudgeClient
+from anchor.parsing import parse_json
 
 _EXTRACTION_PROMPT = """\
 Decompose the answer below into atomic claims. An atomic claim states exactly \
@@ -57,18 +56,7 @@ def extract_claims(answer: str, judge: JudgeClient) -> list[Claim]:
 
 
 def _parse_json_array(raw: str) -> list[object]:
-    try:
-        parsed = json.loads(_strip_code_fence(raw))
-    except json.JSONDecodeError as exc:
-        raise JudgeResponseError("judge response is not valid JSON", raw) from exc
+    parsed = parse_json(raw)
     if not isinstance(parsed, list):
         raise JudgeResponseError(f"expected a JSON array, got {type(parsed).__name__}", raw)
     return parsed
-
-
-def _strip_code_fence(raw: str) -> str:
-    text = raw.strip()
-    if text.startswith("```") and text.endswith("```"):
-        lines = text.splitlines()
-        text = "\n".join(lines[1:-1])
-    return text

@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from anchor import Claim, Evidence, Verdict, VerdictLabel, VerifiedClaim
+from anchor import Chunk, Claim, Evidence, Verdict, VerdictLabel, VerifiedClaim
 
 
 def make_claim() -> Claim:
@@ -32,6 +32,18 @@ class TestClaim:
     def test_is_immutable(self) -> None:
         with pytest.raises(ValidationError):
             make_claim().text = "changed"  # type: ignore[misc]
+
+
+class TestChunk:
+    def test_constructs(self) -> None:
+        chunk = Chunk(id="10k-2025-item7-003", text="Total revenue was $4.2 billion")
+        assert chunk.id == "10k-2025-item7-003"
+
+    @pytest.mark.parametrize("field", ["id", "text"])
+    def test_rejects_empty_fields(self, field: str) -> None:
+        data = {"id": "c1", "text": "some text", field: ""}
+        with pytest.raises(ValidationError):
+            Chunk(**data)
 
 
 class TestVerdict:

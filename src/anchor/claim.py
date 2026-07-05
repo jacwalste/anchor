@@ -32,6 +32,19 @@ class Claim(BaseModel):
     source_text: str = Field(min_length=1)
 
 
+class Chunk(BaseModel):
+    """One piece of retrieved context, addressable by id.
+
+    Evidence cites chunks by id; the verifier resolves those citations
+    against the actual chunks it was given.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    id: str = Field(min_length=1)
+    text: str = Field(min_length=1)
+
+
 class Evidence(BaseModel):
     """A context span backing a verdict: chunk reference plus verbatim quote.
 
