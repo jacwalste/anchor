@@ -1,0 +1,61 @@
+[
+  {
+    "id": "case-01-fabricated-market-position",
+    "question": "What was AcmeCloud's total revenue in fiscal 2025 and how fast did it grow?",
+    "answer": "AcmeCloud's total revenue was $4.20 billion in fiscal 2025, up 12% from the prior year. Subscription revenue grew 15% to $3.10 billion. AcmeCloud is the market leader in cloud infrastructure software.",
+    "chunk_ids": ["acme-rev-total", "acme-rev-segments"],
+    "planted": [
+      {
+        "span": "AcmeCloud is the market leader in cloud infrastructure software.",
+        "expected": "unsupported"
+      }
+    ]
+  },
+  {
+    "id": "case-02-margin-direction-flipped",
+    "question": "How did AcmeCloud's operating margin change in fiscal 2025?",
+    "answer": "AcmeCloud's operating margin improved to 18% in fiscal 2025. Net income was $610 million, or $2.42 per diluted share.",
+    "chunk_ids": ["acme-margin", "acme-netincome"],
+    "planted": [
+      {
+        "span": "AcmeCloud's operating margin improved to 18% in fiscal 2025.",
+        "expected": "contradicted"
+      }
+    ]
+  },
+  {
+    "id": "case-03-fully-grounded-control",
+    "question": "What did AcmeCloud do with its cash in fiscal 2025?",
+    "answer": "AcmeCloud generated $890 million of free cash flow in fiscal 2025 and repurchased $500 million of its common stock. The board authorized a new $1.0 billion repurchase program in the fourth quarter.",
+    "chunk_ids": ["acme-cash", "acme-buyback"],
+    "planted": []
+  },
+  {
+    "id": "case-04-dividend-and-headquarters",
+    "question": "Does AcmeCloud return capital to shareholders?",
+    "answer": "AcmeCloud repurchased $500 million of stock in fiscal 2025 and pays a quarterly dividend of $0.25 per share. The company is headquartered in Seattle.",
+    "chunk_ids": ["acme-buyback", "acme-cash"],
+    "planted": [
+      {
+        "span": "pays a quarterly dividend of $0.25 per share",
+        "expected": "contradicted"
+      },
+      {
+        "span": "The company is headquartered in Seattle.",
+        "expected": "unsupported"
+      }
+    ]
+  },
+  {
+    "id": "case-05-fabricated-analyst-reaction",
+    "question": "What is AcmeCloud's revenue outlook for fiscal 2026?",
+    "answer": "AcmeCloud expects fiscal 2026 revenue of $4.60 billion to $4.70 billion, representing growth of roughly 10% to 12%. Analysts widely praised the guidance as conservative.",
+    "chunk_ids": ["acme-guidance", "acme-rev-total"],
+    "planted": [
+      {
+        "span": "Analysts widely praised the guidance as conservative.",
+        "expected": "unsupported"
+      }
+    ]
+  }
+]

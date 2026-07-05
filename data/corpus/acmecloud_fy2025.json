@@ -1,0 +1,50 @@
+[
+  {
+    "id": "acme-rev-total",
+    "text": "AcmeCloud reported total revenue of $4.20 billion for fiscal 2025, an increase of 12% compared with $3.75 billion in fiscal 2024."
+  },
+  {
+    "id": "acme-rev-segments",
+    "text": "Subscription revenue for fiscal 2025 was $3.10 billion, up 15% year over year, while professional services revenue was $1.10 billion, up 4%."
+  },
+  {
+    "id": "acme-margin",
+    "text": "Operating margin declined to 18% in fiscal 2025 from 21% in fiscal 2024, driven primarily by increased infrastructure and data center spending. Operating income was $756 million."
+  },
+  {
+    "id": "acme-netincome",
+    "text": "Net income for fiscal 2025 was $610 million, or $2.42 per diluted share, compared with $560 million, or $2.24 per diluted share, in fiscal 2024."
+  },
+  {
+    "id": "acme-cash",
+    "text": "As of fiscal year end 2025, cash, cash equivalents and marketable securities totaled $2.8 billion. Free cash flow for fiscal 2025 was $890 million."
+  },
+  {
+    "id": "acme-buyback",
+    "text": "During fiscal 2025 the company repurchased $500 million of its common stock. The board authorized a new $1.0 billion repurchase program in the fourth quarter. AcmeCloud has never paid cash dividends."
+  },
+  {
+    "id": "acme-rnd",
+    "text": "Research and development expense was $840 million in fiscal 2025, representing 20% of total revenue, as the company continued to invest in its platform."
+  },
+  {
+    "id": "acme-intl",
+    "text": "International revenue represented 38% of total revenue in fiscal 2025, up from 35% in fiscal 2024."
+  },
+  {
+    "id": "acme-concentration",
+    "text": "No single customer accounted for more than 8% of total revenue in fiscal 2025. The loss of one or more large customers could materially affect results."
+  },
+  {
+    "id": "acme-guidance",
+    "text": "For fiscal 2026, the company expects total revenue in the range of $4.60 billion to $4.70 billion, representing growth of approximately 10% to 12%."
+  },
+  {
+    "id": "acme-headcount",
+    "text": "AcmeCloud employed approximately 11,200 people at fiscal year end 2025, a 6% increase from the prior year, with most hiring in engineering."
+  },
+  {
+    "id": "acme-rpo",
+    "text": "Remaining performance obligations were $6.3 billion at fiscal year end 2025, of which approximately 55% is expected to be recognized as revenue within the next twelve months."
+  }
+]
