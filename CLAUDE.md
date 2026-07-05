@@ -22,7 +22,7 @@ how you act. Non-negotiable rules live in CI/pre-commit, not here.
   paper clone, flag it.
 
 ## Commands
-- Install (dev): `uv sync`
+- Install (dev): `uv sync --all-extras` (agent tests need the `agent` extra)
 - Test: `uv run pytest`
 - Lint: `uv run ruff check .`
 - Format: `uv run ruff format .`

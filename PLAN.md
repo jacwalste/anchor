@@ -99,9 +99,11 @@ caught failure, not a silent pass). Never model-produced character offsets — L
 are unreliable at offsets.
 
 **D9 — Harness core stays lightweight; agent deps are optional extras.**
-langgraph, the vector store, and checkpointer drivers live behind an
-`anchor[agent]` extra. Installing the harness alone must not drag in the
-reference agent's stack — it's a harness you point at YOUR agent.
+langgraph and checkpointer drivers live behind an `anchor[agent]` extra.
+Installing the harness alone must not drag in the reference agent's stack —
+it's a harness you point at YOUR agent. (v1 retriever is deliberately lexical
+and dependency-free, behind a Retriever protocol; a vector retriever can swap
+in without touching the graph.)
 
 **D10 — Zero extracted claims is a loud error, not a score.** `supported/total`
 over an empty claim list means extraction broke upstream; raise, don't return

@@ -8,8 +8,12 @@ dependencies = [
     "pydantic>=2.7",
 ]
 
-# The reference agent's stack (langgraph, embeddings, checkpointer drivers)
-# will land here as an `agent` extra — the core harness must stay lightweight.
+# The core harness stays lightweight (D9); the reference agent's stack is opt-in.
+[project.optional-dependencies]
+agent = [
+    "langgraph>=1.0",
+    "langgraph-checkpoint-sqlite>=2.0",
+]
 
 [dependency-groups]
 dev = [
