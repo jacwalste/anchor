@@ -8,12 +8,18 @@ dependencies = [
     "pydantic>=2.7",
 ]
 
-# The core harness stays lightweight (D9); the reference agent's stack is opt-in.
+# The core harness stays lightweight (D9); agent and judge stacks are opt-in.
 [project.optional-dependencies]
 agent = [
     "langgraph>=1.0",
     "langgraph-checkpoint-sqlite>=2.0",
 ]
+anthropic = [
+    "anthropic>=0.40",
+]
+
+[project.scripts]
+anchor = "anchor.cli:main"
 
 [dependency-groups]
 dev = [
