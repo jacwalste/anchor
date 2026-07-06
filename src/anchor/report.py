@@ -6,6 +6,7 @@ the product; the scalar is just the summary line.
 
 from collections.abc import Sequence
 
+from anchor.benchmark import BenchmarkResult
 from anchor.claim import VerdictLabel, VerifiedClaim
 from anchor.score import score_claims
 
@@ -40,6 +41,40 @@ def render_markdown(verified: Sequence[VerifiedClaim]) -> str:
     for number, item in enumerate(verified, start=1):
         lines.extend(_render_claim(item, number=number))
 
+    return "\n".join(lines)
+
+
+def render_benchmark_markdown(result: BenchmarkResult) -> str:
+    """Render a benchmark run: catch rate up top, per-case detail below."""
+    lines = [
+        "# Anchor Benchmark Report",
+        "",
+        f"Cases: {len(result.cases)} · Planted hallucinations caught: "
+        f"**{result.caught_count} of {result.planted_count}**",
+    ]
+    if result.errored_case_ids:
+        lines.append(f"Cases with judge errors: {', '.join(result.errored_case_ids)}")
+    lines.append("")
+
+    for case in result.cases:
+        lines.extend([f"## {case.case_id}", ""])
+        if case.error is not None:
+            lines.extend([f"JUDGE ERROR: {case.error}", ""])
+            continue
+        score = case.score
+        if score is None:
+            lines.extend(["No claims extracted.", ""])
+            continue
+        lines.extend(
+            [f"Score: **{score.score:.2f}** ({score.supported} of {score.total} supported)", ""]
+        )
+        for outcome in case.planted_outcomes:
+            status = "CAUGHT" if outcome.caught else "MISSED"
+            lines.append(
+                f'- {status} (expected {outcome.planted.expected.value}): "{outcome.planted.span}"'
+            )
+        if case.planted_outcomes:
+            lines.append("")
     return "\n".join(lines)
 
 
