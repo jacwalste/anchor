@@ -29,9 +29,7 @@ def insufficient(refined_query: str) -> str:
     return json.dumps({"sufficient": False, "refined_query": refined_query})
 
 
-def make_agent(
-    responses: list[str], checkpointer: Any = None
-) -> tuple[Any, ScriptedJudge]:
+def make_agent(responses: list[str], checkpointer: Any = None) -> tuple[Any, ScriptedJudge]:
     model = ScriptedJudge(responses=responses)
     graph = build_agent(LexicalRetriever(CORPUS), model.complete, checkpointer)
     return graph, model

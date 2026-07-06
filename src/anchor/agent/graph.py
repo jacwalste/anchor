@@ -98,9 +98,7 @@ def _parse_assessment(raw: str) -> _Assessment:
     try:
         return _Assessment.model_validate_json(strip_code_fence(raw))
     except ValidationError as exc:
-        raise ValueError(
-            f"agent model returned an invalid sufficiency assessment:\n{raw}"
-        ) from exc
+        raise ValueError(f"agent model returned an invalid sufficiency assessment:\n{raw}") from exc
 
 
 def _format_context(chunks: list[Chunk]) -> str:

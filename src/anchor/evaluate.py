@@ -18,6 +18,5 @@ def evaluate_answer(
     """
     claims = extract_claims(answer, judge)
     return [
-        VerifiedClaim(claim=claim, verdict=verify_claim(claim, context, judge))
-        for claim in claims
+        VerifiedClaim(claim=claim, verdict=verify_claim(claim, context, judge)) for claim in claims
     ]

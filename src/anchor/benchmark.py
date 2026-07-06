@@ -55,9 +55,7 @@ class BenchmarkResult(BaseModel):
 
     @property
     def caught_count(self) -> int:
-        return sum(
-            1 for case in self.cases for outcome in case.planted_outcomes if outcome.caught
-        )
+        return sum(1 for case in self.cases for outcome in case.planted_outcomes if outcome.caught)
 
     @property
     def errored_case_ids(self) -> list[str]:
@@ -79,9 +77,7 @@ def run_benchmark(
             PlantedOutcome(planted=planted, caught=_is_caught(case.answer, planted, verified))
             for planted in case.planted
         ]
-        results.append(
-            CaseResult(case_id=case.id, verified=verified, planted_outcomes=outcomes)
-        )
+        results.append(CaseResult(case_id=case.id, verified=verified, planted_outcomes=outcomes))
     return BenchmarkResult(cases=results)
 
 

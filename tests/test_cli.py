@@ -22,9 +22,7 @@ def data_files(tmp_path: Path) -> tuple[Path, Path]:
                     "question": "What was revenue?",
                     "answer": "Revenue was $4.2 billion. AcmeCloud leads the market.",
                     "chunk_ids": ["c1"],
-                    "planted": [
-                        {"span": "AcmeCloud leads the market.", "expected": "unsupported"}
-                    ],
+                    "planted": [{"span": "AcmeCloud leads the market.", "expected": "unsupported"}],
                 }
             ]
         )

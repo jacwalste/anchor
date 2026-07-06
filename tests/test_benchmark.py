@@ -89,9 +89,7 @@ def test_judge_failure_on_one_case_does_not_kill_the_run() -> None:
     judge = ScriptedJudge(
         responses=[
             "garbage that is not json",  # case-x extraction fails
-            json.dumps(
-                [{"text": "Revenue was $4.2B", "source_text": "Revenue was $4.2 billion"}]
-            ),
+            json.dumps([{"text": "Revenue was $4.2B", "source_text": "Revenue was $4.2 billion"}]),
             supported_verdict(),
         ]
     )

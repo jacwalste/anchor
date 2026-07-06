@@ -20,9 +20,7 @@ class AnthropicJudge:
     configured client is injected.
     """
 
-    def __init__(
-        self, model: str, max_tokens: int = 4096, client: Anthropic | None = None
-    ) -> None:
+    def __init__(self, model: str, max_tokens: int = 4096, client: Anthropic | None = None) -> None:
         self._model = model
         self._max_tokens = max_tokens
         self._client = client if client is not None else Anthropic()

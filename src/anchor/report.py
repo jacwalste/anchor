@@ -87,7 +87,7 @@ def _render_claim(item: VerifiedClaim, number: int | None = None) -> list[str]:
     ]
     if item.verdict.evidence is not None:
         lines.append(
-            f'{indent}- evidence [{item.verdict.evidence.chunk_id}]: '
+            f"{indent}- evidence [{item.verdict.evidence.chunk_id}]: "
             f'"{item.verdict.evidence.quote}"'
         )
     lines.extend([f"{indent}- rationale: {item.verdict.rationale}", ""])

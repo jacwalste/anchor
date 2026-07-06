@@ -34,7 +34,5 @@ class ScriptedJudge:
     def complete(self, prompt: str) -> str:
         self.prompts.append(prompt)
         if not self._responses:
-            raise AssertionError(
-                f"ScriptedJudge exhausted after {len(self.prompts) - 1} responses"
-            )
+            raise AssertionError(f"ScriptedJudge exhausted after {len(self.prompts) - 1} responses")
         return self._responses.pop(0)
