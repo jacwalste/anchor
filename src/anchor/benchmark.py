@@ -12,7 +12,7 @@ losing one answer to a judge hiccup must not lose the whole benchmark.
 
 from collections.abc import Sequence
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, computed_field
 
 from anchor.claim import Chunk, VerdictLabel, VerifiedClaim
 from anchor.dataset import BenchmarkCase, PlantedHallucination, resolve_context
@@ -37,6 +37,7 @@ class CaseResult(BaseModel):
     planted_outcomes: list[PlantedOutcome] = Field(default_factory=list)
     error: str | None = None
 
+    @computed_field  # type: ignore[prop-decorator]
     @property
     def score(self) -> GroundednessScore | None:
         if self.error is not None or not self.verified:
@@ -49,14 +50,17 @@ class BenchmarkResult(BaseModel):
 
     cases: list[CaseResult]
 
+    @computed_field  # type: ignore[prop-decorator]
     @property
     def planted_count(self) -> int:
         return sum(len(case.planted_outcomes) for case in self.cases)
 
+    @computed_field  # type: ignore[prop-decorator]
     @property
     def caught_count(self) -> int:
         return sum(1 for case in self.cases for outcome in case.planted_outcomes if outcome.caught)
 
+    @computed_field  # type: ignore[prop-decorator]
     @property
     def errored_case_ids(self) -> list[str]:
         return [case.case_id for case in self.cases if case.error is not None]

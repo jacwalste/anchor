@@ -5,6 +5,7 @@ the project that does. Extras load lazily so `anchor --help` works without them.
 """
 
 import argparse
+import json
 from collections.abc import Sequence
 from pathlib import Path
 
@@ -13,6 +14,7 @@ from anchor.dataset import load_benchmark, load_chunks
 from anchor.evaluate import evaluate_answer
 from anchor.judge import JudgeClient
 from anchor.report import render_benchmark_markdown, render_markdown
+from anchor.score import score_claims
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -30,6 +32,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     bench.add_argument(
         "--max-concurrency", type=int, default=4, help="parallel verification calls per answer"
     )
+    bench.add_argument(
+        "--format", choices=["markdown", "json"], default="markdown", help="output format"
+    )
 
     ask = subcommands.add_parser(
         "ask", help="ask the reference agent a question and score its answer"
@@ -40,6 +45,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     ask.add_argument("--judge-model", required=True, help="Anthropic model id for the judge")
     ask.add_argument(
         "--max-concurrency", type=int, default=4, help="parallel verification calls per answer"
+    )
+    ask.add_argument(
+        "--format", choices=["markdown", "json"], default="markdown", help="output format"
     )
 
     args = parser.parse_args(argv)
@@ -61,7 +69,10 @@ def _cmd_benchmark(args: argparse.Namespace) -> int:
         judge=_make_judge(args.judge_model),
         max_concurrency=args.max_concurrency,
     )
-    print(render_benchmark_markdown(result))
+    if args.format == "json":
+        print(result.model_dump_json(indent=2))
+    else:
+        print(render_benchmark_markdown(result))
     return 1 if result.errored_case_ids else 0
 
 
@@ -71,12 +82,22 @@ def _cmd_ask(args: argparse.Namespace) -> int:
     corpus = load_chunks(args.corpus)
     agent = FinancialResearchAgent(corpus, model=_make_judge(args.agent_model).complete)
     run = agent.run(args.question)
-    print(f"## Agent answer\n\n{run.answer}\n")
     verified = evaluate_answer(
         run.answer,
         run.retrieved,
         _make_judge(args.judge_model),
         max_concurrency=args.max_concurrency,
     )
-    print(render_markdown(verified))
+    if args.format == "json":
+        payload = {
+            "question": args.question,
+            "answer": run.answer,
+            "retrieved": [chunk.model_dump() for chunk in run.retrieved],
+            "claims": [item.model_dump() for item in verified],
+            "score": score_claims(verified).model_dump(),
+        }
+        print(json.dumps(payload, indent=2))
+    else:
+        print(f"## Agent answer\n\n{run.answer}\n")
+        print(render_markdown(verified))
     return 0

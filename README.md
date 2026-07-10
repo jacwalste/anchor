@@ -121,7 +121,11 @@ provenance you can point at your own system.
 
 ```sh
 uv sync --all-extras
-uv run pytest          # no live model calls, ever
+uv run pytest              # no live model calls, ever
 uv run ruff check .
 uv run mypy src/
+uv run pre-commit install  # optional: run the same checks at commit time
 ```
+
+Both CLI commands take `--format json` for machine-readable output and
+`--max-concurrency` to parallelize per-claim verification calls.
