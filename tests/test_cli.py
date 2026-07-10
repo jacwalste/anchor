@@ -56,8 +56,10 @@ def test_benchmark_command_prints_report_and_exits_zero(
     )
     monkeypatch.setattr(cli, "_make_judge", lambda model: judge)
 
+    # ScriptedJudge replays responses in order, so pin verification to sequential.
     exit_code = cli.main(
         ["benchmark", "--corpus", str(corpus), "--cases", str(cases), "--judge-model", "stub"]
+        + ["--max-concurrency", "1"]
     )
 
     assert exit_code == 0
@@ -76,6 +78,7 @@ def test_benchmark_command_exits_nonzero_on_judge_errors(
 
     exit_code = cli.main(
         ["benchmark", "--corpus", str(corpus), "--cases", str(cases), "--judge-model", "stub"]
+        + ["--max-concurrency", "1"]
     )
 
     assert exit_code == 1

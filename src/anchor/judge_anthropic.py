@@ -17,7 +17,8 @@ class AnthropicJudge:
     """JudgeClient backed by the Anthropic Messages API.
 
     Credentials come from the environment (ANTHROPIC_API_KEY) unless a
-    configured client is injected.
+    configured client is injected. Thread-safe — usable with
+    evaluate_answer's max_concurrency.
     """
 
     def __init__(self, model: str, max_tokens: int = 4096, client: Anthropic | None = None) -> None:

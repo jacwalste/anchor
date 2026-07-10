@@ -1,5 +1,7 @@
 """Test doubles and factories shared across the suite. No real model calls, ever."""
 
+import threading
+
 from anchor import Claim, Evidence, Verdict, VerdictLabel, VerifiedClaim
 
 
@@ -29,10 +31,16 @@ class ScriptedJudge:
 
     def __init__(self, responses: list[str]) -> None:
         self._responses = list(responses)
+        self._lock = threading.Lock()
         self.prompts: list[str] = []
 
     def complete(self, prompt: str) -> str:
-        self.prompts.append(prompt)
-        if not self._responses:
-            raise AssertionError(f"ScriptedJudge exhausted after {len(self.prompts) - 1} responses")
-        return self._responses.pop(0)
+        # Race-safe, but response order still assumes sequential callers —
+        # concurrency tests use prompt-keyed judges instead.
+        with self._lock:
+            self.prompts.append(prompt)
+            if not self._responses:
+                raise AssertionError(
+                    f"ScriptedJudge exhausted after {len(self.prompts) - 1} responses"
+                )
+            return self._responses.pop(0)

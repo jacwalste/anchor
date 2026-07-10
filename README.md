@@ -77,7 +77,8 @@ As a library, the front door is three calls:
 ```python
 from anchor import evaluate_answer, render_markdown, score_claims
 
-verified = evaluate_answer(answer, retrieved_chunks, judge)  # extract + verify
+# extract + verify; max_concurrency parallelizes the per-claim verification calls
+verified = evaluate_answer(answer, retrieved_chunks, judge, max_concurrency=8)
 print(score_claims(verified).score)
 print(render_markdown(verified))
 ```

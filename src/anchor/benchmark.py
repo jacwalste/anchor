@@ -63,13 +63,17 @@ class BenchmarkResult(BaseModel):
 
 
 def run_benchmark(
-    cases: Sequence[BenchmarkCase], corpus: Sequence[Chunk], judge: JudgeClient
+    cases: Sequence[BenchmarkCase],
+    corpus: Sequence[Chunk],
+    judge: JudgeClient,
+    *,
+    max_concurrency: int = 1,
 ) -> BenchmarkResult:
     results: list[CaseResult] = []
     for case in cases:
         context = resolve_context(case, corpus)
         try:
-            verified = evaluate_answer(case.answer, context, judge)
+            verified = evaluate_answer(case.answer, context, judge, max_concurrency=max_concurrency)
         except JudgeResponseError as exc:
             results.append(CaseResult(case_id=case.id, error=str(exc)))
             continue
