@@ -5,6 +5,8 @@ agent's answer into atomic claims and verifies each one against the context
 the agent actually retrieved — surfacing *which sentence* is hallucinated and
 *where* the evidence gap is, not just a faithfulness scalar.
 
+Full design walkthrough and decision record: [DESIGN.md](DESIGN.md).
+
 ```markdown
 # Groundedness Report
 
